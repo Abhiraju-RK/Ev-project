@@ -1,0 +1,87 @@
+{% extends 'app/staff_header.html' %}
+{% block title %} Slot List {% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Slot List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: #f9f9f9;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #222;
+        }
+
+        .slot-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .slot-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            width: 260px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease;
+        }
+
+        .slot-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .slot-info {
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .slot-info i {
+            color: black;
+            margin-right: 8px;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        .status.booked {
+            color: red;
+        }
+
+        .status.available {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h2><i class="fa fa-calendar-plus"></i> Slot List</h2>
+    <div class="slot-container">
+        {% for slot in slots %}
+            <div class="slot-card">
+                <div class="slot-info"><i class="fa fa-list"></i> <strong>Name:</strong> {{ slot.name }}</div>
+                <div class="slot-info"><i class="fa fa-dollar-sign"></i> <strong>Price:</strong> ₹{{ slot.price }}</div>
+                <div class="slot-info"><i class="fa fa-train"></i> <strong>Station:</strong> {{ slot.station.name }}</div>
+                <div class="slot-info">
+                    <i class="fa fa-check-circle"></i>
+                    <strong>Status:</strong>
+                    <span class="status {% if slot.is_booked %}booked{% else %}available{% endif %}">
+                        {% if slot.is_booked %}Booked{% else %}Available{% endif %}
+                    </span>
+                </div>
+            </div>
+        {% empty %}
+            <p>No slots available.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
+{% endblock %}

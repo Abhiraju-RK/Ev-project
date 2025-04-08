@@ -1,0 +1,129 @@
+{% extends 'app/staff_header.html' %}
+{% block title %}Add Stations{% endblock %}
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f4f4f4;
+        padding: 40px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 30px;
+        max-width: 400px;
+        margin: auto;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .input-icon {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #fafafa;
+        font-size: 14px;
+    }
+
+    .input-icon span {
+        margin-right: 10px;
+    }
+
+    .input-icon input {
+        flex: 1;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        background-color: #000;
+        color: white;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: #333;
+    }
+
+    .back-link {
+        text-align: center;
+        display: block;
+        margin-top: 15px;
+        color: #333;
+        text-decoration: none;
+        font-size: 15px;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
+    .msg {
+        text-align: center;
+        color: red;
+        margin-bottom: 15px;
+    }
+</style>
+
+<h2>➕ Add New Station</h2>
+
+{% if messages %}
+    <div class="msg">
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <div class="input-icon">
+        <span>🏷️</span>
+        <input type="text" name="name" placeholder="Station Name" required>
+    </div>
+
+    <div class="input-icon">
+        <span>🏙️</span>
+        <input type="text" name="city" placeholder="City" required>
+    </div>
+
+    <div class="input-icon">
+        <span>📍</span>
+        <input type="text" name="location" placeholder="Location" required>
+    </div>
+
+    <div class="input-icon">
+        <span>🗺️</span>
+        <input type="url" name="quik_map" placeholder="Map URL" required>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit</button>
+</form>
+
+<a href="{% url 'station_list' %}" class="back-link">⬅️ Back to Station List</a>
+
+{% endblock %}

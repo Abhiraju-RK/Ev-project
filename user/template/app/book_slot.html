@@ -1,0 +1,36 @@
+{% extends 'app/user_header.html' %}
+{% block title %}Confirm Booking{% endblock %}
+{% block content %}
+
+<div style="max-width: 500px; margin: auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin-top: 30px;">
+    <h2 style="text-align: center; margin-bottom: 20px;">Confirm Slot Booking</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="color: {% if message.tags == 'error' %}#dc3545{% else %}#28a745{% endif %}; text-align: center; margin-bottom: 15px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <p><strong>Station:</strong> {{ slot.station.name }}</p>
+        <p><strong>Slot Name:</strong> {{ slot.name }}</p>
+        <p><strong>Slot Price:</strong> ₹{{ slot.price }}</p>
+
+        <label for="booking_date"><strong>Select Booking Date:</strong></label><br>
+        <input type="date" name="booking_date" required class="form-control" style="width: 100%; padding: 8px; margin-bottom: 15px;"><br>
+
+        <label for="booking_time"><strong>Select Booking Time:</strong></label><br>
+        <input type="time" name="booking_time" required class="form-control" style="width: 100%; padding: 8px; margin-bottom: 20px;"><br>
+
+        <div style="text-align: center;">
+            <button type="submit" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px;">Confirm Booking</button>
+            <a href="{% url 'user_slot_list' slot.station.id %}" style="padding: 10px 20px; background: #dc3545; color: white; border-radius: 5px; text-decoration: none; margin-left: 10px;">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
