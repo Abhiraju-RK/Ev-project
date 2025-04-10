@@ -13,7 +13,7 @@
 
         
         <!-- title of site -->
-        <title>Ev-Charging website</title>
+        <title>Ev-Quick</title>
 
         <!-- For favicon png -->
 		<link rel="shortcut icon" type="image/icon" href="{% static 'logo/favicon.png' %}"/>
@@ -21,18 +21,7 @@
         <!--font-awesome.min.css-->
         <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
 
-        <!--linear icon css-->
-		<link rel="stylesheet" href="{% static 'css/linearicons.css' %}">
-
-		<!--animate.css-->
-        <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-
-		<!--flaticon.css-->
-        <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
-
-		<!--slick.css-->
-        <link rel="stylesheet" href="{% static 'css/slick.css' %}">
-		<link rel="stylesheet" href="{% static 'css/slick-theme.css' %}">
+       
 		
         <!--bootstrap.min.css-->
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -68,7 +57,7 @@
 			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 			                    <i class="fa fa-bars"></i>
 			                </button>
-			                <a class="navbar-brand" href="index.html">list<span>race</span></a>
+			                <a class="navbar-brand" href="index.html">EV<span>Quick</span></a>
 
 			            </div><!--/.navbar-header-->
 			            <!-- End Header Navigation -->
@@ -92,12 +81,11 @@
 
 		</section><!-- /.top-area-->
 
-       
-
+		<br>
         {% block content %}
         {% endblock %}
 
-        {% include 'app/footer.html' %}
+      
 
 		<!-- Include all js compiled plugins (below), or include individual files as needed -->
 
@@ -109,18 +97,8 @@
 		<!--bootstrap.min.js-->
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
 		
-		<!-- bootsnav js -->
-		<script src="{% static 'js/bootsnav.js' %}"></script>
-
-        <!--feather.min.js-->
-        <script  src="{% static 'js/feather.min.js' %}"></script>
-
-        <!-- counter js -->
-		<script src="{% static 'js/jquery.counterup.min.js' %}"></script>
-		<script src="{% static 'js/waypoints.min.js' %}"></script>
-
-        <!--slick.min.js-->
-        <script src="{% static 'js/slick.min.js' %}"></script>
+		
+       
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 		     
@@ -130,3 +108,5 @@
     </body>
 	
 </html>
+
+
