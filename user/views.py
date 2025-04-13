@@ -37,7 +37,7 @@ def user_register(request):
             messages.error(request,'Password didnt Match !!')
             return redirect('user_register')
         
-        if not phone.isdigit() or len(phone)!=10:
+        if len(phone)!=10:
             messages.error(request, 'Phone number must be exactly 10 digits!')
             return redirect('user_register')
         user=Client.objects.create_user(username=username,email=email,password=password)

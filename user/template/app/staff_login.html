@@ -75,6 +75,14 @@
 
 <div class="login-container">
     <h2>Staff Login</h2>
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
     <form method="POST">
         {% csrf_token %}
         <label>Email:</label>

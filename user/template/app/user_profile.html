@@ -58,6 +58,11 @@
 
 <div class="profile-container">
     <h2>User Profile</h2>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 
     <form method="POST">
         {% csrf_token %}

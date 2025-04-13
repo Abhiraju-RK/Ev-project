@@ -81,13 +81,14 @@
 
 <div class="login-container">
     <h2>User Login</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
     <form method="POST" action="">
         {% csrf_token %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
 
         <div>
             <label class="form-label">Email:</label>

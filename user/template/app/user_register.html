@@ -81,6 +81,13 @@
 
 <div class="register-container">
     <h2>User Registration</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    
     <form method="POST" action="">
         {% csrf_token %}
        
