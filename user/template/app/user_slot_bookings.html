@@ -38,6 +38,17 @@
             margin-right: 10px;
             color: #007BFF;
         }
+        .payment-status {
+            font-weight: bold;
+            color: #28a745;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .pending-status {
+            color: #dc3545;
+            cursor: pointer;
+            text-decoration: underline;
+        }
         .no-bookings {
             text-align: center;
             font-size: 18px;
@@ -58,6 +69,15 @@
         <div class="slot-info"><i class="fa fa-clock"></i><strong>Slot Time:</strong> {{ booking.booking_time }}</div>
         <div class="slot-info"><i class="fa fa-calendar-day"></i><strong>Date:</strong> {{ booking.booking_date }}</div>
         <div class="slot-info"><i class="fa fa-calendar-plus"></i><strong>Booked At:</strong> {{ booking.booked_at|date:"F j, Y, h:i A" }}</div>
+        
+        <div class="slot-info">
+            <i class="fa fa-money-bill-wave"></i><strong>Payment Status:</strong>
+            {% if booking.payment_status == "Completed" %}
+                <span class="payment-status">{{ booking.payment_status }}</span>
+            {% else %}
+                <a href="{% url 'dummy_payment' booking.id %}" class="pending-status">{{ booking.payment_status }}</a>
+            {% endif %}
+        </div>
     </div>
     {% endfor %}
 </div>

@@ -57,7 +57,7 @@
 			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 			                    <i class="fa fa-bars"></i>
 			                </button>
-			                <a class="navbar-brand" href="index.html">EV<span>Quick</span></a>
+			                <a class="navbar-brand" href="{% url 'index' %}">EV<span>Quick</span></a>
 
 			            </div><!--/.navbar-header-->
 			            <!-- End Header Navigation -->
@@ -67,8 +67,8 @@
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 			                    <li><a href="{% url 'index' %}">home</a></li>
 			                    <li><a href="{% url 'index' %}">how it works</a></li>
-			                    <li ><a href="{% url 'staff_register' %}">Staff-Sign up</a></li>
-								<li><a href="{% url 'user_register' %}">User-sign up</a></li>
+			                    <li ><a href="{% url 'staff_login' %}">Staff-Sign in</a></li>
+								<li><a href="{% url 'user_login' %}">User-sign in</a></li>
 			                </ul><!--/.nav -->
 			            </div><!-- /.navbar-collapse -->
 			        </div><!--/.container-->

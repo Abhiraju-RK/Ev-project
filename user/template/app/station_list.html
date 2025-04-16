@@ -6,7 +6,6 @@
     body {
         font-family: 'Segoe UI', sans-serif;
         background-color: #f2f2f2;
-        
     }
 
     h2 {
@@ -122,8 +121,9 @@
                 <a href="{{ station.quik_map }}" class="map-link" target="_blank">View on Map</a>
             </div>
             <div class="station-actions">
-                <a href="{% url 'add_slot' %}">Add Slot</a>
-                <a href="{% url 'slot_list' %}">View Slots</a>
+                <a href="{% url 'edit_station' station.id %}">✏️ Edit</a><br>
+                <a href="{% url 'add_slot' %}">➕ Add Slot</a>  <!-- Passing station_id here -->
+                <a href="{% url 'slot_list' station.id %}">📋 View Slots</a>
             </div>
         </div>
     {% empty %}

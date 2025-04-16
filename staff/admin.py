@@ -6,7 +6,7 @@ from user.models import Client
 class AdminBooking(admin.ModelAdmin):
     list_display = ['client', 'slot', 'booking_date']
 class AdminStaff(admin.ModelAdmin):
-    list_display = ['staff', 'email']
+    list_display = ['user', 'email']
 class AdminAvailableSlot(admin.ModelAdmin):
     list_display = ['station', 'name', 'price']
 class AdminStation(admin.ModelAdmin):

@@ -1,0 +1,37 @@
+{% extends 'app/staff_header.html' %}
+{% block title %}Edit Station{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);">
+    <h2 style="text-align: center; margin-bottom: 25px;">Edit Station</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div style="color: {% if message.tags == 'error' %}#dc3545{% else %}#28a745{% endif %}; background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; border: 1px solid {% if message.tags == 'error' %}#f5c6cb{% else %}#c3e6cb{% endif %}; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        <label><strong>Station Name:</strong></label>
+        <input type="text" name="name" value="{{ station.name }}" class="form-control" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+        <label><strong>Location:</strong></label>
+        <input type="text" name="location" value="{{ station.location }}" class="form-control" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+        <label><strong>City:</strong></label>
+        <input type="text" name="city" value="{{ station.city }}" class="form-control" required style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+        <label><strong>Quick Map Link:</strong></label>
+        <input type="url" name="quik_map" value="{{ station.quik_map }}" class="form-control" style="width: 100%; padding: 10px; margin-bottom: 20px;">
+
+        <div style="text-align: center;">
+            <button type="submit" style="padding: 10px 30px; background: #28a745; color: white; border: none; border-radius: 5px;">
+                Update Station
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

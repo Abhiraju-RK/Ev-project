@@ -1,86 +1,114 @@
 {% extends 'app/staff_header.html' %}
 {% block title %} Slot List {% endblock %}
 {% block content %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Slot List</title>
-  
-    <style>
-        body {
-            background: #f9f9f9;
-            font-family: 'Segoe UI', sans-serif;
-        }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #222;
-        }
+<style>
+    body {
+        background: #f9f9f9;
+        font-family: 'Segoe UI', sans-serif;
 
-        .slot-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
+    }
 
-        .slot-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            width: 260px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            transition: transform 0.2s ease;
-        }
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #222;
+    }
 
-        .slot-card:hover {
-            transform: translateY(-5px);
-        }
+    .slot-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
 
-        .slot-info {
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
+    .slot-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 260px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease;
+    }
 
-        .slot-info i {
-            color: black;
-            margin-right: 8px;
-        }
+    .slot-card:hover {
+        transform: translateY(-5px);
+    }
 
-        .status {
-            font-weight: bold;
-        }
+    .slot-info {
+        margin-bottom: 10px;
+        font-size: 15px;
+        color: #333;
+    }
 
-        .status.booked {
-            color: red;
-        }
+    .slot-info strong::before {
+        margin-right: 8px;
+    }
 
-        .status.available {
-            color: green;
-        }
-    </style>
-</head>
-<body>
-    <h2><i class="fa fa-calendar-plus"></i> Slot List</h2>
-    <div class="slot-container">
-        {% for slot in slots %}
-            <div class="slot-card">
-                <div class="slot-info"><i class="fa fa-list"></i> <strong>Name:</strong> {{ slot.name }}</div>
-                <div class="slot-info"><i class="fa fa-dollar-sign"></i> <strong>Price:</strong> ₹{{ slot.price }}</div>
-                <div class="slot-info"><i class="fa fa-train"></i> <strong>Station:</strong> {{ slot.station.name }}</div>
-                <div class="slot-info">
-                    <i class="fa fa-check-circle"></i>
-                    <strong>Status:</strong>
-                    <span class="status {% if slot.is_booked %}booked{% else %}available{% endif %}">
-                        {% if slot.is_booked %}Booked{% else %}Available{% endif %}
-                    </span>
-                </div>
-            </div>
-        {% empty %}
-            <p>No slots available.</p>
-        {% endfor %}
-    </div>
-</body>
-</html>
+    .slot-info:nth-child(1) strong::before {
+        content: "📝";
+    }
+
+    .slot-info:nth-child(2) strong::before {
+        content: "💰";
+    }
+
+    .slot-info:nth-child(3) strong::before {
+        content: "🚉";
+    }
+
+    .book-btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 14px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    .book-btn::before {
+        content: "📌 ";
+    }
+
+    .book-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .status {
+        font-weight: bold;
+    }
+
+    .status.booked {
+        color: red;
+    }
+
+    .status.available {
+        color: green;
+    }
+
+    .no-slots {
+        text-align: center;
+        font-size: 16px;
+        color: #777;
+        margin-top: 20px;
+    }
+</style>
+
+<h2>📅 Slot List</h2>
+
+<div class="slot-container">
+    {% for slot in slots %}
+        <div class="slot-card">
+            <div class="slot-info"><strong>Name:</strong> {{ slot.name }}</div>
+            <div class="slot-info"><strong>Price:</strong> ₹{{ slot.price }}</div>
+            <div class="slot-info"><strong>Station:</strong> {{ slot.station.name }}</div>
+        </div>
+    {% empty %}
+        <p class="no-slots">No slots available.</p>
+    {% endfor %}
+</div>
+
 {% endblock %}

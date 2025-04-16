@@ -59,7 +59,7 @@
 			                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
 			                    <i class="fa fa-bars"></i>
 			                </button>
-			                <a class="navbar-brand" href="index.html">EV<span>Quick</span></a>
+			                <a class="navbar-brand" href="{% url 'index' %}">EV<span>Quick</span></a>
 
 			            </div><!--/.navbar-header-->
 			            <!-- End Header Navigation -->
@@ -69,8 +69,8 @@
 			                <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
 			                    <li class=" scroll active"><a href="#home">home</a></li>
 			                    <li class="scroll"><a href="#works">how it works</a></li>
-			                    <li ><a href="{% url 'staff_register' %}">Staff-Sign up</a></li>
-								<li><a href="{% url 'user_register' %}">User-sign up</a></li>
+			                    <li ><a href="{% url 'staff_login' %}">Staff-Sign in</a></li>
+								<li><a href="{% url 'user_login' %}">User-sign in</a></li>
 			                </ul><!--/.nav -->
 			            </div><!-- /.navbar-collapse -->
 			        </div><!--/.container-->
@@ -100,8 +100,8 @@
 		<section id="works" class="works">
 			<div class="container">
 				<div class="section-header">
-					<h2>how it works</h2>
-					<p>It is the platform for book Your Ev vehicle Charging Station near-by</p>
+					<h2>About</h2>
+					<p> Ev-Qucik is charger finder to you Ev vehicles you can search the nearest charging spot and book you slot through our website so it help to save you time</p>
 				</div><!--/.section-header-->
 
 		</section><!--/subscription-->	

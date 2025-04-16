@@ -9,6 +9,7 @@ from staff.models import Staff,Station,AvailableSlot,Booking
 from django.utils import timezone
 from datetime import datetime
 from django.db.models import Q
+from django.urls import reverse
 
 # Create your views here.
 def index(request):
@@ -19,40 +20,50 @@ def user_index(request):
 
 def user_register(request):
     if request.method == "POST":
-        username=request.POST.get('username')
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        confirm_pass=request.POST.get('confirm_pass')
-        phone=request.POST.get('phone')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_pass = request.POST.get('confirm_pass')
+        phone = request.POST.get('phone')
 
         if not username or not email or not password or not confirm_pass or not phone:
-            messages.error(request,"All-Field required !!")
+            messages.error(request, "All fields are required!")
+            return redirect('user_register')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'Email already exists!')
+            return redirect('user_register')
+
+        if confirm_pass != password:
+            messages.error(request, 'Passwords did not match!')
+            return redirect('user_register')
+
+        if len(phone) != 10 or not phone.isdigit():
+            messages.error(request, 'Phone number must be exactly 10 digits and contain only numbers!')
             return redirect('user_register')
         
-        if Client.objects.filter(email=email).exists():
-            messages.error(request,'Email Already exists !!')
-            return redirect('user_register')
-        
-        if confirm_pass!=password:
-            messages.error(request,'Password didnt Match !!')
-            return redirect('user_register')
-        
-        if len(phone)!=10:
-            messages.error(request, 'Phone number must be exactly 10 digits!')
-            return redirect('user_register')
-        user=Client.objects.create_user(username=username,email=email,password=password)
-        user.phone=phone
+        user = User.objects.create_user(username=username, email=email, password=password)
         user.save()
-        messages.success(request,"Register Successfully")
+
+        Client.objects.create(user=user, email=email, phone=phone)
+
+        messages.success(request, "Client registered successfully!")
         return redirect('user_login')
-    return render(request, 'app/user_register.html') 
+
+    return render(request, 'app/user_register.html')
 
 def user_login(request):
     if request.method == "POST":
         email=request.POST.get('email')
         password=request.POST.get('password')
 
-        user=authenticate(request,username=email,password=password)
+        try:
+            user_obj=Client.objects.get(email=email)
+        except Client.DoesNotExist:
+            messages.error(request,'You are  not registerd')
+            return redirect('user_register')
+
+        user=authenticate(request,username=user_obj.user.username,password=password)
         if user is not None:
             login(request,user)
             messages.success(request,f'{user.username} successfully login ')
@@ -113,12 +124,13 @@ def user_slot_list(request, station_id):
 
 @login_required
 def book_slot(request, book_id):
-    client = request.user
+    client = Client.objects.get(user=request.user)
     slot = get_object_or_404(AvailableSlot, id=book_id)
 
     if request.method == 'POST':
         booking_date_str = request.POST.get('booking_date')
         booking_time_str = request.POST.get('booking_time')
+        duration=int(request.POST.get('duration_minutes'))
 
         try:
             booking_date = datetime.strptime(booking_date_str, "%Y-%m-%d").date()
@@ -127,35 +139,44 @@ def book_slot(request, book_id):
             messages.error(request, "Invalid date or time format.")
             return redirect('book_slot', book_id=book_id)
 
-        # Check if a booking already exists for the same station, date, and time
-        conflict = Booking.objects.filter(
-            booking_date=booking_date,
-            booking_time=booking_time,
-            slot__station=slot.station
-        ).exists()
-
-        if conflict:
-            messages.error(request, "This time slot is already booked. Please choose a different time.")
+        if not slot.is_available(booking_date, booking_time):
+            messages.error(request, "This station is already booked at this time. Please choose a different time.")
             return redirect('book_slot', book_id=book_id)
-
-        # Create booking
-        Booking.objects.create(
+        
+        # Calculate total price (slot.price is per 30 minutes)
+        total_price=(duration // 30) * slot.price
+        booking=Booking.objects.create(
             client=client,
             slot=slot,
             booked_at=timezone.now(),
             booking_date=booking_date,
-            booking_time=booking_time
+            booking_time=booking_time,
+            duration_minutes=duration,
+            total_price=total_price
         )
 
         messages.success(request, "Slot booked successfully!")
-        return redirect('user_slot_bookings')
+        return redirect('dummy_payment',booking_id=booking.id)
 
     return render(request, 'app/book_slot.html', {'slot': slot})
 
+@login_required
+def dummy_payment(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, client__user=request.user)
+
+    if request.method == 'POST':
+        # Simulate a "payment"
+        booking.payment_status = "Completed"  # If you have a field for this
+        booking.save()
+
+        messages.success(request, "Payment completed successfully!")
+        return redirect('user_slot_bookings')
+
+    return render(request, 'app/dummy_payment.html', {'booking': booking})
 
 @login_required
 def user_slot_bookings(request):
-    client=request.user
+    client=Client.objects.get(user=request.user)
     bookings=Booking.objects.filter(client=client)
     return render(request,'app/user_slot_bookings.html',{'bookings':bookings})
 
@@ -171,3 +192,4 @@ def search_station(request):
         ) if query else Station.objects.all()
     return render(request, 'app/search_list.html', {'stations': stations, 'query': query})
     
+

@@ -10,7 +10,8 @@ urlpatterns = [
 
     path('station_list',views.station_list,name='station_list'),
     path('add_station',views.add_station,name='add_station'),
+    path('edit_station/<int:station_id>/', views.edit_station, name='edit_station'),
     path('add_slot',views.add_slot,name='add_slot'),
-    path('slot_list',views.slot_list,name='slot_list'),
+    path('slot_list/<int:station_id>/',views.slot_list,name='slot_list'),
     path('slot_bookings',views.slot_bookings,name='slot_bookings'),
 ]

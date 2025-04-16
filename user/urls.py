@@ -14,4 +14,5 @@ urlpatterns=[
     path('user_slot_bookings',views.user_slot_bookings,name='user_slot_bookings'),
     path('user_station_list/<int:station_id>/user_slot_list',views.user_slot_list,name='user_slot_list'),
     path('search_station',views.search_station,name='search_station'),
+    path('dummy_payment/<int:booking_id>/',views.dummy_payment,name='dummy_payment'),
 ]
